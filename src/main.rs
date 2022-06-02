@@ -117,7 +117,6 @@ fn main() {
 
     match load_rules(cli.rules_file) {
         Ok(rules) => {
-            println!("{:?}", rules);
             let mut new_words: Vec<String> = words.clone();
             for _ in 0..cli.iterations {
                 for r in rules.as_slice() {
