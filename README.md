@@ -11,6 +11,10 @@ So you're brute-forcing a web app or other target. Sure you have a wordlist, may
 
 That's what `pwfuzz-rs` is about. 
 
+## Installation
+
+You can of course build from source, but hey, it's a Rust tool, so you can also just `cargo install pwfuzz-rs`!
+
 ## Usage
 
 ```bash
