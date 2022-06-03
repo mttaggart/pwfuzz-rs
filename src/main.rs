@@ -40,13 +40,13 @@ struct Cli {
     iterations: usize,
 }
 
-fn append(word: &String, appendee: &String) -> String {
+fn append(word: &String, appendee: &str) -> String {
     let mut res = String::from(word);
     res.push_str(appendee);
     res
 }
 
-fn prepend(word: &String, prependee: &String) -> String {
+fn prepend(word: &str, prependee: &String) -> String {
     let mut res = String::from(prependee);
     res.push_str(word);
     res
@@ -75,7 +75,7 @@ fn append_random(word: &String, rand_range: usize) -> String {
     res
 }
 
-fn prepend_random(word: &String, rand_range: usize) -> String {
+fn prepend_random(word: &str, rand_range: usize) -> String {
     let mut rng = rand::thread_rng();
     let rand_n = rng.gen_range(0..rand_range);
     let mut res = rand_n.to_string();
