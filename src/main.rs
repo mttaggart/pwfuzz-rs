@@ -108,7 +108,7 @@ fn main() {
     let mut words = read_to_string(cli.wordlist_file)
         .unwrap_or_else(|_| "".to_string())
         .trim()
-        .split("\n")
+        .split('\n')
         .map(|s| s.to_string())
         .collect::<Vec<String>>();
 
