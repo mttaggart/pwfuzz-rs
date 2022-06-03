@@ -13,6 +13,8 @@ That's what `pwfuzz-rs` is about.
 
 ## Installation
 
+There are binaries available for Linux and Windows over on [Releases](https://github.com/mttaggart/pwfuzz-rs/releases/latest).
+
 You can of course build from source, but hey, it's a Rust tool, so you can also just `cargo install pwfuzz-rs`!
 
 ## Usage
