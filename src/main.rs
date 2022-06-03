@@ -5,6 +5,7 @@
 // toggle, append ! -> password!
 // insert * 4 -> pass*word
 use std::fs::read_to_string;
+use std::path::Path;
 use std::process::exit;
 use clap::Parser;
 use serde::{Deserialize, Serialize};
@@ -40,24 +41,24 @@ struct Cli {
     iterations: usize,
 }
 
-fn append(word: &String, appendee: &str) -> String {
+fn append(word: &str, appendee: &str) -> String {
     let mut res = String::from(word);
     res.push_str(appendee);
     res
 }
 
-fn prepend(word: &str, prependee: &String) -> String {
+fn prepend(word: &str, prependee: &str) -> String {
     let mut res = String::from(prependee);
     res.push_str(word);
     res
 }
 
-fn insert(word: &String, insertion: &String, insert_idx: usize) -> String {
+fn insert(word: &str, insertion: &str, insert_idx: usize) -> String {
 
     if word.len() > insert_idx + 1 {
         let parts = word.split_at(insert_idx);
         let mut res = String::from(parts.0);
-        res.push_str(&insertion);
+        res.push_str(insertion);
         res.push_str(parts.1);
         res
 
@@ -67,7 +68,7 @@ fn insert(word: &String, insertion: &String, insert_idx: usize) -> String {
 
 }
 
-fn append_random(word: &String, rand_range: usize) -> String {
+fn append_random(word: &str, rand_range: usize) -> String {
     let mut rng = rand::thread_rng();
     let rand_n = rng.gen_range(0..rand_range);
     let mut res = String::from(word);
@@ -83,7 +84,7 @@ fn prepend_random(word: &str, rand_range: usize) -> String {
     res
 }
 
-fn apply(rule: &Rule, word: &String) -> String {
+fn apply(rule: &Rule, word: &str) -> String {
     match rule {
         Rule::Append(a) => append(word, a),
         Rule::Prepend(p) => prepend(word, p),
@@ -95,7 +96,7 @@ fn apply(rule: &Rule, word: &String) -> String {
     }
 }
 
-fn load_rules(path: String) -> Result<Vec<Rule>, String> {
+fn load_rules<P: AsRef<Path>> (path: P) -> Result<Vec<Rule>, String> {
     match from_str::<RulesDefinition>(read_to_string(path).unwrap_or_default().as_str()) {
         Ok(rules_def) => Ok(rules_def.rules),
         Err(e) => Err(e.to_string()),
@@ -118,7 +119,7 @@ fn main() {
             for _ in 0..cli.iterations {
                 for r in rules.as_slice() {
                     new_words
-                        .append(&mut words.iter().map(|w| apply(&r, w)).collect::<Vec<String>>());
+                        .append(&mut words.iter().map(|w| apply(r, w)).collect::<Vec<String>>());
                 }
                 words = new_words.clone();
             }
