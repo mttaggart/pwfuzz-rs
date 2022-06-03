@@ -4,13 +4,11 @@
 // prepend !, append 2021 -> !PASSWORD2021
 // toggle, append ! -> password!
 // insert * 4 -> pass*word
-use std::env::args;
-use std::error::Error;
 use std::fs::read_to_string;
 use std::process::exit;
 use clap::Parser;
 use serde::{Deserialize, Serialize};
-use serde_json::{from_str, to_string};
+use serde_json::from_str;
 use rand::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug)]
