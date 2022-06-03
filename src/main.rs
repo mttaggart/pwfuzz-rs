@@ -92,7 +92,6 @@ fn apply(rule: &Rule, word: &String) -> String {
         Rule::Insert((insertion, insertion_idx)) => insert(word, insertion, *insertion_idx),
         Rule::AppendRandom(rand_range) => append_random(word, *rand_range),
         Rule::PrependRandom(rand_range) => prepend_random(word, *rand_range),
-        _ => word.to_string(),
     }
 }
 
