@@ -4,13 +4,13 @@
 // prepend !, append 2021 -> !PASSWORD2021
 // toggle, append ! -> password!
 // insert * 4 -> pass*word
+use clap::Parser;
+use rand::prelude::*;
+use serde::{Deserialize, Serialize};
+use serde_json::from_str;
 use std::fs::read_to_string;
 use std::path::Path;
 use std::process::exit;
-use clap::Parser;
-use serde::{Deserialize, Serialize};
-use serde_json::from_str;
-use rand::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 enum Rule {
@@ -54,18 +54,15 @@ fn prepend(word: &str, prependee: &str) -> String {
 }
 
 fn insert(word: &str, insertion: &str, insert_idx: usize) -> String {
-
     if word.len() > insert_idx + 1 {
         let parts = word.split_at(insert_idx);
         let mut res = String::from(parts.0);
         res.push_str(insertion);
         res.push_str(parts.1);
         res
-
     } else {
         word.to_string()
     }
-
 }
 
 fn append_random(word: &str, rand_range: usize) -> String {
@@ -96,7 +93,7 @@ fn apply(rule: &Rule, word: &str) -> String {
     }
 }
 
-fn load_rules<P: AsRef<Path>> (path: P) -> Result<Vec<Rule>, String> {
+fn load_rules<P: AsRef<Path>>(path: P) -> Result<Vec<Rule>, String> {
     match from_str::<RulesDefinition>(read_to_string(path).unwrap_or_default().as_str()) {
         Ok(rules_def) => Ok(rules_def.rules),
         Err(e) => Err(e.to_string()),
