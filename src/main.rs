@@ -10,7 +10,6 @@ use serde::{Deserialize, Serialize};
 use serde_json::from_str;
 use std::fs::read_to_string;
 use std::path::Path;
-use std::process::exit;
 
 #[derive(Serialize, Deserialize, Debug)]
 enum Rule {
@@ -100,7 +99,7 @@ fn load_rules<P: AsRef<Path>>(path: P) -> Result<Vec<Rule>, String> {
     }
 }
 
-fn main() {
+fn main() -> Result<(), String> {
     let cli = Cli::parse();
 
     let mut words = read_to_string(cli.wordlist_file)
@@ -126,8 +125,8 @@ fn main() {
             }
         }
         Err(e) => {
-            println!("{e}");
-            exit(-1);
+            return Err(e);
         }
     }
+    Ok(())
 }
