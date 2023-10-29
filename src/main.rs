@@ -102,12 +102,14 @@ fn load_rules<P: AsRef<Path>>(path: P) -> Result<Vec<Rule>, String> {
 fn main() -> Result<(), String> {
     let cli = Cli::parse();
 
-    let mut words = read_to_string(cli.wordlist_file)
-        .unwrap_or_else(|_| "".to_string())
-        .trim()
-        .lines()
-        .map(|s| s.to_string())
-        .collect::<Vec<String>>();
+    let mut words = match read_to_string(cli.wordlist_file) {
+        Ok(words) => words
+            .trim()
+            .lines()
+            .map(|s| s.to_string())
+            .collect::<Vec<String>>(),
+        Err(e) => return Err(e.to_string()),
+    };
 
     match load_rules(cli.rules_file) {
         Ok(rules) => {
