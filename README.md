@@ -1,3 +1,5 @@
+# THIS REPO HAS BEEN ARCHIVED AND MOVED TO [CODEBERG](https://codeberg.org/mttaggart/pwfuzz-rs)
+
 # PWFuzz-RS
 A Rust-based password mutator for brute force attacks
 
